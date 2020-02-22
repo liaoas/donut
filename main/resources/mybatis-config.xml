@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<!-- 允许懒加载 -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- 当启用时，对任意延迟属性的调用会使用带有延迟加载属性的对象的完整加载，否则按属性按需加载 -->
+		<setting name="aggressiveLazyLoading" value="false" />
+		<!-- 是否开启自动驼峰命名规则的映射 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!-- 开启主键的生成策略  -->
+		<setting name="useGeneratedKeys" value="true" />
+	</settings>
+</configuration>

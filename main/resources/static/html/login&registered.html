@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:v-model="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="utf-8">
+    <title>登录&注册</title>
+    <link rel="shortcut icon" href="../images/ico/bitbug_favicons.ico" />
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/public/spops.css">
+    <!--jQuery-->
+    <script src="../js/public/jquery-3.4.1.js"></script>
+    <!--当前页面js-->
+    <script src="../js/login&registered.js"></script>
+    <!--消息弹出-->
+    <script src="../js/public/news/util.js"></script>
+    <script src="../js/public/news/X-tips.js"></script>
+   <!-- 警告消息-->
+    <script src="../js/public/spops.js"></script>
+</head>
+<body>
+<div class="dowebok">
+    <div class="form sign-in">
+        <h2>欢迎回来</h2>
+        <label>
+            <span>邮箱</span>
+            <input type="email sign-in-email" id="sign-in-email"autocomplete="new-password"/>
+        </label>
+        <label>
+            <span>密码</span>
+            <input type="password sign-in-password" id="sign-in-password"autocomplete="new-password"/>
+        </label>
+        <!--<p class="forgot-pass"><a href="javascript:">忘记密码？</a></p>-->
+        <button type="button" class="submit sign-in-submit">登 录</button>
+        <!--<button type="button" class="fb-btn">使用 <span>facebook</span> 帐号登录</button>-->
+    </div>
+    <div class="sub-cont">
+        <div class="img">
+            <div class="img__text m--up">
+                <h2>还未注册？</h2>
+                <p>立即注册，发现大量机会！</p>
+            </div>
+            <div class="img__text m--in">
+                <h2>已有帐号？</h2>
+                <p>有帐号就登录吧，好久不见了！</p>
+            </div>
+            <div class="img__btn" @click="addEventListener">
+                <span class="m--up">注 册</span>
+                <span class="m--in">登 录</span>
+            </div>
+        </div>
+        <div class="form sign-up">
+            <h2>立即注册</h2>
+            <label>
+                <span>用户名</span>
+                <input type="text" @blur="sign-up-name-lose" name="name" id="sign-up-name"autocomplete="new-password"/>
+            </label>
+            <!--<label>
+                <span>邮箱</span>
+                <input type="email" name="email" id="sign-up-email" v-model="sign_up_email"/>
+            </label>-->
+            <label>
+                <span>密码</span>
+                <input type="password" name="password" id="sign-up-password"autocomplete="new-password"/>
+            </label>
+            <button type="button" class="submit sign-up-button" id="sign-up-button">注 册</button>
+            <!--<button type="button" class="fb-btn">使用 <span>facebook</span> 帐号注册</button>-->
+        </div>
+    </div>
+</div>
+</body>
+</body>
+<script>
+    document.querySelector('.img__btn').addEventListener('click', function () {
+        document.querySelector('.dowebok').classList.toggle('s--signup')
+    })
+</script>
+</html>

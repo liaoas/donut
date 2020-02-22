@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liao.dao.DBulletinMapper">
+    <resultMap id="BaseResultMap" type="com.liao.entity.DBulletin">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="bulletin_userId" property="bulletinUserid" jdbcType="INTEGER"/>
+        <result column="bulletin_title" property="bulletinTitle" jdbcType="VARCHAR"/>
+        <result column="bulletin_status" property="bulletinStatus" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="bulletin_content" property="bulletinContent" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, bulletin_userId, bulletin_title, bulletin_status, create_time,bulletin_content
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from d_bulletin
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from d_bulletin
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <!--公告添加-->
+    <insert id="userBulletinAdd" parameterType="com.liao.entity.DBulletin">
+        insert into d_bulletin (bulletin_userId, bulletin_title,
+                                bulletin_status, create_time, bulletin_content)
+        values (#{bulletinUserid,jdbcType=INTEGER}, #{bulletinTitle,jdbcType=VARCHAR},
+                #{bulletinStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+                #{bulletinContent,jdbcType=LONGVARCHAR})
+    </insert>
+
+    <!--公告动态查询-->
+    <select id="bulletinDynamicSelect" parameterType="com.liao.entity.DBulletin" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from d_bulletin
+        where 1 = 1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="bulletinUserid != null">
+            and bulletin_userId = #{bulletinUserid}
+        </if>
+        <if test="bulletinTitle != null">
+            and bulletin_title like "%"#{bulletinTitle}"%"
+        </if>
+        <if test="bulletinStatus != null">
+            and bulletin_status = #{bulletinStatus}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime}
+        </if>
+        <if test="bulletinContent != null">
+            and bulletin_content like "%"#{bulletinContent}"%"
+        </if>
+        order by create_time desc
+    </select>
+    <!--公告动态修改-->
+    <update id="bulletinDynamicUpdate" parameterType="com.liao.entity.DBulletin">
+        update d_bulletin
+        set
+        <if test="bulletinUserid != null">
+            bulletin_userId = #{bulletinUserid},
+        </if>
+        <if test="bulletinTitle != null">
+            bulletin_title = #{bulletinTitle},
+        </if>
+        <if test="bulletinStatus != null">
+            bulletin_status = #{bulletinStatus},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime},
+        </if>
+        <if test="bulletinContent != null">
+            bulletin_content = #{bulletinContent},
+        </if>
+        id = #{id}
+        where id = #{id}
+    </update>
+    <insert id="insertSelective" parameterType="com.liao.entity.DBulletin">
+        insert into d_bulletin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="bulletinUserid != null">
+                bulletin_userId,
+            </if>
+            <if test="bulletinTitle != null">
+                bulletin_title,
+            </if>
+            <if test="bulletinStatus != null">
+                bulletin_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="bulletinContent != null">
+                bulletin_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="bulletinUserid != null">
+                #{bulletinUserid,jdbcType=INTEGER},
+            </if>
+            <if test="bulletinTitle != null">
+                #{bulletinTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="bulletinStatus != null">
+                #{bulletinStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bulletinContent != null">
+                #{bulletinContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.liao.entity.DBulletin">
+        update d_bulletin
+        <set>
+            <if test="bulletinUserid != null">
+                bulletin_userId = #{bulletinUserid,jdbcType=INTEGER},
+            </if>
+            <if test="bulletinTitle != null">
+                bulletin_title = #{bulletinTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="bulletinStatus != null">
+                bulletin_status = #{bulletinStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bulletinContent != null">
+                bulletin_content = #{bulletinContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.liao.entity.DBulletin">
+        update d_bulletin
+        set bulletin_userId  = #{bulletinUserid,jdbcType=INTEGER},
+            bulletin_title   = #{bulletinTitle,jdbcType=VARCHAR},
+            bulletin_status  = #{bulletinStatus,jdbcType=INTEGER},
+            create_time      = #{createTime,jdbcType=TIMESTAMP},
+            bulletin_content = #{bulletinContent,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.liao.entity.DBulletin">
+        update d_bulletin
+        set bulletin_userId = #{bulletinUserid,jdbcType=INTEGER},
+            bulletin_title  = #{bulletinTitle,jdbcType=VARCHAR},
+            bulletin_status = #{bulletinStatus,jdbcType=INTEGER},
+            create_time     = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

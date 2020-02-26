@@ -30,6 +30,7 @@ public class DBbsServiceImpl implements DBbsService {
         try {
             if (record == null){
                 throw new RegistException("留言参数为空");
+
             }
 
             if (record.getBbsUserid() == null || record.getBbsUserid().equals("")){

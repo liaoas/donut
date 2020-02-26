@@ -27,31 +27,31 @@
         <include refid="Base_Column_List"/>
         from d_user
         where 1 = 1
-        <if test="id != null">
+        <if test="id != null and userAccount != ''">
             and id = #{id}
         </if>
-        <if test="userAccount != null">
+        <if test="userAccount != null and userAccount != ''">
             and user_account = #{userAccount}
         </if>
-        <if test="userPassword != null">
+        <if test="userPassword != null and userPassword != ''">
             and user_password = #{userPassword}
         </if>
-        <if test="userRoles != null">
+        <if test="userRoles != null and userRoles != ''">
             and user_roles like "%"#{userRoles}"%"
         </if>
-        <if test="userName != null">
+        <if test="userName != null and userName != ''">
             and user_name like "%"#{userName}"%"
         </if>
-        <if test="userSex != null">
+        <if test="userSex != null and userSex != ''">
             and user_sex like "%"#{userSex}"%"
         </if>
-        <if test="userAge != null">
+        <if test="userAge != null and userAge != ''">
             and user_age like "%"#{userAge}"%"
         </if>
-        <if test="userEmail != null">
+        <if test="userEmail != null and userEmail != ''">
             and user_email like "%"#{userEmail}"%"
         </if>
-        <if test="userStatus != null">
+        <if test="userStatus != null and userStatus != ''">
             and user_status = #{userStatus}
         </if>
         order by create_time desc

@@ -44,7 +44,36 @@ public class DuerController {
         // 数据校验
         Map Validator_msg = new ValidatorMsg().validator(result);
         if (Validator_msg == null) {
-            // 注册方法
+            // 为身份赋值
+            user.setUserRoles("普通用户");
+            // 执行用户注册
+            rejson = dUserService.userRegistered(user);
+            rejson.setMap(Validator_msg);
+
+        } else {
+            rejson.setMap(Validator_msg);
+            System.out.println("注册失败" + rejson.toString());
+        }
+        System.out.println("注册成功" + rejson.toString());
+        return rejson;
+    }
+
+    /**
+     * 管理员添加
+     *
+     * @param user
+     * @param result
+     */
+    @RequestMapping(value = "/administratoradd", method = RequestMethod.POST)
+    @ResponseBody
+    public Rejson administratorAdd(@Valid DUser user, BindingResult result) {
+        rejson = new Rejson();
+        // 数据校验
+        Map Validator_msg = new ValidatorMsg().validator(result);
+        if (Validator_msg == null) {
+            // 为身份赋值
+            user.setUserRoles("管理员");
+            // 添加方法方法
             rejson = dUserService.userRegistered(user);
             rejson.setMap(Validator_msg);
 
@@ -131,12 +160,10 @@ public class DuerController {
      */
     @RequestMapping(value = "/selectall", method = RequestMethod.POST)
     @ResponseBody
-    public Rejson userDynamicSelect(@Valid DUser user, BindingResult result,
+    public Rejson userDynamicSelect(DUser user, BindingResult result,
                                     @RequestParam(value = "pn",defaultValue = "1") Integer pn) {
         System.out.println("查询的数据"+user);
         rejson = new Rejson();
-        // 验证数据
-        Map Validator_msg = new ValidatorMsg().validator(result);
         // 数据校验
         if (Validator_msg == null) {
             // 查询方法

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+
+</body>
+<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var datas = '';
+
+    /*使用Promise 处理Ajax请求*/
+    /*function queryData(url) {
+        var p = new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState != 4) return;
+                if (xhr.readyState = 4 && xhr.status == 200) {
+                    //处理正常情况
+                    resolve(xhr.responseText);
+                } else {
+                    reject('服务器错误');
+                }
+            };
+            xhr.open('post', url);
+            xhr.send(null)
+        });
+        return p;
+    }*/
+
+
+    /*queryData("http://localhost:8080/donut/user/selectall")
+    .then(function (data) {
+        console.log(data);
+    },function (info ) {
+        console.log(info);
+    });*/
+    /* // 基于Promise发送多个Ajax请求
+     queryData("http://localhost:8080/donut/user/selectall")
+     .then(function (data) {
+         console.log(data);
+         return queryData("http://localhost:8080/donut/bbs/select");
+     })
+     .then(function (data) {
+         console.log(data);
+         return queryData("http://localhost:8080/donut/bulletin/select");
+     })
+     .then(function (data) {
+         console.log(data);
+         datas = data
+     })*/
+    /*var p1 = queryData("http://localhost:8080/donut/user/selectall");
+    var p2 = queryData("http://localhost:8080/donut/bbs/select");
+    var p3 = queryData("http://localhost:8080/donut/bulletin/select");*/
+
+    /**
+     * Promise
+     */
+
+    /*Promise.all([p1,p2,p3]).then(function (result) {
+         // 所有的请求执行完才会得到结果
+         console.log(result)
+    })*/
+    /*Promise.race([p1,p2,p3]).then(function (result) {
+        // 只要完成一个就会得到结果，不关心其他的
+        console.log(result)
+    })*/
+
+    /**
+     * Fetch
+     */
+    // Fetch API(传统方式)基本用法
+    /*fetch("http://localhost:8080/donut/user/selectall",{
+        method:'post',
+        body:'userAccount=admin02',
+        headers:{
+            'Content-type':'application/x-www-form-urlencoded'
+        }
+    }).then(function (data) {
+        return data.text();
+    }).then(function (data) {
+        console.log(data);
+    })*/
+    /*使用对象方法 传递json对象*/
+    /*fetch("http://localhost:8080/donut/user/selectall", {
+        method: 'post',
+        body: JSON.stringify({
+            userAccount: 'admin02'
+        }),
+        headers: {
+            'Content-type': 'application/json'
+        }
+    }).then(function (data) {
+        return data.text();
+    }).then(function (data) {
+        console.log(data);
+    })*/
+    /**
+     * axios
+     */
+    /*axios.post("http://localhost:8080/donut/user/selectall",{
+        params:{
+            userAccount: 'admin02'
+        }
+    }).then(function (ret) {
+        console.log(ret.data);
+        console.log(ret);
+    })*/
+
+    /* axios.post("http://localhost:8080/donut/user/selectall",{
+             userAccount: 'admin02'
+     }).then(function (ret) {
+         console.log(ret.data);
+     })*/
+
+    // 将所有的参数放入 params 作为参数传递
+    /*var params = new URLSearchParams();
+    params.append('userAccount','');
+
+    axios.post("http://localhost:8080/donut/user/selectall", params).then(function (ret) {
+        console.log(ret.data);
+    })*/
+
+
+
+    /**
+     * 相应结果
+     */
+    /*请求时间
+    axios.defaults.timeout = 3000;
+    // 配置axios 基准URL地址
+    axios.defaults.baseURL = "http://localhost:8080/donut/";
+    // 配置请求头信息
+    axios.defaults.headers['mytoken'] = 'hello';
+    axios.post("user/selectall").then(function (ret) {
+        console.log(ret.data);
+    })*/
+
+    /**
+     * axios 拦截器
+     */
+    /*// 请求拦截器 在请求发出之前设置一些信息
+    axios.interceptors.request.use(function (config) {
+        // 输出请求路径
+        console.log(config.url);
+        // 配置请求头
+        config.headers.mytoken = 'nihao';
+        return config;
+    },function (err) {
+        console.log(err)
+    });
+
+    // 响应拦截器 对返回的数据进行处理
+    axios.interceptors.response.use(function (res) {
+        return res.data;
+    },function (err) {
+        console.log(err)
+    });
+
+    axios.post("http://localhost:8080/donut/user/selectall").then(function (res) {
+         console.log(res)
+    })*/
+
+    /**
+     * asyns/await
+     */
+
+    // 使用asyns/await 进行异步操作
+
+    axios.defaults.baseURL = "http://localhost:8080/donut/user/";
+    // 响应拦截器
+    // axios.interceptors.response.use(function (res) {
+    //     return res;
+    // },function (err) {
+    //     console.log(err);
+    // });
+
+    // axios.post("selectall").then(function (res) {
+    //     console.log(res);
+    // });
+
+    // async function queryDate() {
+    //     var res = await axios.post("selectall");
+    //     return res;
+    // }
+
+    // promise
+    /*async function queryDate() {
+         var res = await new Promise(function (resolve, reject) {
+             setTimeout(function () {
+                 resolve("你好");
+             }, 3000)
+         });
+         return res;
+     }
+
+     queryDate().then(function (res) {
+         console.log(res);
+     })*/
+
+    // async 和 await 处理多个异步请求 可以保证请求顺序
+
+
+    async function queryDate() {
+        var info = await axios.post('selectall');
+        // 第二次请求
+        // var info01 = await axios.post("路径",/*可以是第一次请求的结果*/);
+        return info;
+    }
+
+    queryDate().then(function (res) {
+        console.log(res)
+    })
+
+</script>
+</html>

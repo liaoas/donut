@@ -146,6 +146,12 @@ $(function () {
                             style: 'success',
                             autoclose: 2000
                         });
+                        if (data.list[0].userRoles == '管理员'){
+                            setTimeout(function () {
+                                window.location.href='http://localhost:8080/donut/html/user.html';
+                            },3000)
+
+                        }
                     }else {
                         // 密码错误
                         spop({

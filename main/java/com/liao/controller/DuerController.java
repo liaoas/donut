@@ -125,7 +125,7 @@ public class DuerController {
             userList.add((DUser) session.getAttribute("user"));
         }
         // 验证用户是否登录
-        rejson = new ValidatorMsg().selectVerification(userList,"数据获取成功","当前用户未登录");
+        rejson = new ValidatorMsg().selectVerification(userList,"Session数据获取成功","当前用户未登录");
         return rejson;
     }
 
@@ -163,14 +163,13 @@ public class DuerController {
     public Rejson userDynamicSelect(DUser user, BindingResult result,
                                     @RequestParam(value = "pn",defaultValue = "1") Integer pn) {
         System.out.println("查询的数据"+user);
-        rejson = new Rejson();
+
+        Rejson rejson = new Rejson();
         // 数据校验
         if (Validator_msg == null) {
             // 查询方法
-            rejson = dUserService.userDynamicSelect(user);
+            rejson = dUserService.userDynamicSelect(user,pn);
             rejson.setMap(Validator_msg);
-            // 分页
-            rejson = new ValidatorMsg().dataPagination(rejson ,pn);
         } else {
             rejson.setMap(Validator_msg);
             System.out.println("查询用户失败" + rejson.toString());

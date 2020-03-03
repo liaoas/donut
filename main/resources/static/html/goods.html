@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title>用户管理</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">
+    <link rel="stylesheet" href="../css/public/bootstrap-4.2.1.css">
+    <!--<link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-4.2.1.css">-->
     <!-- Font Awesome CSS-->
+    <!--<link rel="stylesheet" href="../css/public/font-awesome.min.css">-->
     <link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
     <!-- Fontastic Custom icon font-->
     <link rel="stylesheet" href="../css/fontastic.css">
@@ -21,193 +23,441 @@
     <link rel="stylesheet" href="../css/custom.css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="../images/ico/bitbug_favicons.ico">
-    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-  </head>
-  <body>
-    <div class="page">
-      <!-- Main Navbar-->
-      <header class="header">
+    <!--页面弹出层-->
+    <link href="../css/public/animate.css" rel="stylesheet"/>
+    <!-- Tweaks for older IEs-->
+    <!-- 警告消息-->
+    <link rel="stylesheet" href="../css/public/spops.css">
+
+    <script src="../js/public/html5shiv.min.js"></script>
+    <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>-->
+    <script src="../js/public/respond.min.js"></script>
+    <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>--><![endif]-->
+
+
+</head>
+<body>
+<div class="page" id="user_tables">
+    <!-- Main Navbar-->
+    <header class="header">
         <nav class="navbar">
-          <!-- Search Box-->
-          <div class="search-box">
-            <button class="dismiss"><i class="icon-close"></i></button>
-            <form id="searchForm" action="#" role="search">
-              <input type="search" placeholder="What are you looking for..." class="form-control">
-            </form>
-          </div>
-          <div class="container-fluid">
-            <div class="navbar-holder d-flex align-items-center justify-content-between">
-              <!-- Navbar Header-->
-              <div class="navbar-header">
-                <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
-                  <div class="brand-text d-none d-lg-inline-block"><strong>Mr.Wick</strong></div>
-                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
-                <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
-              </div>
-              <!-- Navbar Menu -->
-              <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-                <!-- Search-->
-                <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
-                <!-- Notifications-->
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
-                  <ul aria-labelledby="notifications" class="dropdown-menu">
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification">
-                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
-                          <div class="notification-time"><small>4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification">
-                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
-                          <div class="notification-time"><small>4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification">
-                          <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
-                          <div class="notification-time"><small>4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification">
-                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
-                          <div class="notification-time"><small>10 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>view all notifications                                            </strong></a></li>
-                  </ul>
-                </li>
-                <!-- Messages                        -->
-                <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
-                  <ul aria-labelledby="notifications" class="dropdown-menu">
-                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
-                        <div class="msg-profile"> <img src="../img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
-                        <div class="msg-body">
-                          <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
-                        <div class="msg-profile"> <img src="../img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
-                        <div class="msg-body">
-                          <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
-                        <div class="msg-profile"> <img src="../img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
-                        <div class="msg-body">
-                          <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>Read all messages   </strong></a></li>
-                  </ul>
-                </li>
-                <!-- Languages dropdown    -->
-                <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="../img/flags/16/CN.png" alt="English"><span class="d-none d-sm-inline-block">简体中文</span></a>
-                  <ul aria-labelledby="languages" class="dropdown-menu">
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="../img/flags/16/CN.png" alt="English" class="mr-2">繁体中文</a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="../img/flags/16/GB.png" alt="English" class="mr-2">English                                         </a></li>
-                  </ul>
-                </li>
-                <!-- Logout    -->
-                <li class="nav-item"><a href="login&registered.html" class="nav-link logout"> <span class="d-none d-sm-inline">退出</span><i class="fa fa-sign-out"></i></a></li>
-              </ul>
+            <!-- Search Box-->
+            <div class="search-box">
+                <button class="dismiss"><i class="icon-close"></i></button>
+                <form id="searchForm" action="#" role="search">
+                    <input type="search" placeholder="What are you looking for..." class="form-control">
+                </form>
             </div>
-          </div>
-        </nav>
-      </header>
-      <div class="page-content d-flex align-items-stretch"> 
-        <!-- Side Navbar -->
-        <nav class="side-navbar">
-          <!-- Sidebar Header-->
-          <div class="sidebar-header d-flex align-items-center">
-            <div class="avatar"><img src="../images/myIco.jpg" alt="..." class="img-fluid rounded-circle"></div>
-            <div class="title">
-              <h1 class="h4">Mr.Wick</h1>
-              <p>李小澳</p>
-            </div>
-          </div>
-          <!-- Sidebar Navidation Menus--><span class="heading">主要</span>
-          <ul class="list-unstyled">
-            <li><a href="index.html"> <i class="fa fa-home" aria-hidden="true"></i>首页 </a></li>
-            <li><a href="user.html"> <i class="fa fa-user" aria-hidden="true"></i>用户 </a></li>
-            <li class="active"><a href="goods.html"> <i class="fa fa-eyedropper"></i>商品 </a></li>
-            <li><a href="evaluation.html"> <i class="fa fa-bookmark" aria-hidden="true"></i>评价 </a></li>
-            <li><a href="bulletin.html"> <i class="fa fa-bullhorn"></i>公告</a></li>
-          </ul>
-        </nav>
-        <div class="content-inner">
-          <!-- Page Header-->
-          <header class="page-header">
             <div class="container-fluid">
-              <h2 class="no-margin-bottom">用户</h2>
-            </div>
-          </header>
-          <!-- Breadcrumb-->
-          <div class="breadcrumb-holder container-fluid">
-            <ul class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">首页</a></li>
-              <li class="breadcrumb-item active">用户</li>
-            </ul>
-          </div>
-          <section class="tables" style="padding: 30px 0;">
-            <div class="container-fluid">
-              <div class="row" id="user_table">
-                <div class="col-lg-6" style="max-width: 100%;flex: 0 0 100%">
-                  <div class="card">
-                    <div class="card-close">
-                      <div class="dropdown">
-                        <button type="button" id="closeCard1" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"
-                                @click="add"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                        <!--<div aria-labelledby="closeCard1" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>-->
-                      </div>
+                <div class="navbar-holder d-flex align-items-center justify-content-between">
+                    <!-- Navbar Header-->
+                    <div class="navbar-header">
+                        <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                        <div class="brand-text d-none d-lg-inline-block"><strong>Mr.Wick</strong></div>
+                        <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div>
+                    </a>
+                        <!-- Toggle Button--><a id="toggle-btn" href="#"
+                                                class="menu-btn" :class="{'active':!isActive}"
+                                                @click="changeNavigation"><span></span><span></span><span></span></a>
                     </div>
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">用户表</h3>
-                    </div>
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table">
-                          <thead>
-                          <tr>
-                            <th><input type="checkbox"/></th>
-                            <th>账号</th>
-                            <th>身份</th>
-                            <th>姓名</th>
-                            <th>性别</th>
-                            <th>邮箱</th>
-                            <th>时间</th>
-                            <th>操作</th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          <tr v-for="(v,k) in createcode">
-                            <th><input type="checkbox"/></th>
-                            <td>{{v.userAccount}}</td>
-                            <td>{{v.userRoles}}</td>
-                            <td>{{v.userName}}</td>
-                            <td>{{v.userSex}}</td>
-                            <td>{{v.userEmail}}</td>
-                            <td>{{v.createTime}}</td>
-                            <td><i class="fa fa-trash-o" aria-hidden="true"></i></td>
-                          </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
+                    <!-- Navbar Menu -->
+                    <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                        <!-- Search-->
+                        <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i
+                                class="icon-search"></i></a></li>
+                        <!-- Notifications-->
+                        <li class="nav-item dropdown"><a id="notifications" rel="nofollow" data-target="#" href="#"
+                                                         data-toggle="dropdown" aria-haspopup="true"
+                                                         aria-expanded="false" class="nav-link"><i
+                                class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
+                            <ul aria-labelledby="notifications" class="dropdown-menu">
+                                <li><a rel="nofollow" href="#" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You
+                                            have 6 new messages
+                                        </div>
+                                        <div class="notification-time"><small>4 minutes ago</small></div>
+                                    </div>
+                                </a></li>
+                                <li><a rel="nofollow" href="#" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have
+                                            2 followers
+                                        </div>
+                                        <div class="notification-time"><small>4 minutes ago</small></div>
+                                    </div>
+                                </a></li>
+                                <li><a rel="nofollow" href="#" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server
+                                            Rebooted
+                                        </div>
+                                        <div class="notification-time"><small>4 minutes ago</small></div>
+                                    </div>
+                                </a></li>
+                                <li><a rel="nofollow" href="#" class="dropdown-item">
+                                    <div class="notification">
+                                        <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have
+                                            2 followers
+                                        </div>
+                                        <div class="notification-time"><small>10 minutes ago</small></div>
+                                    </div>
+                                </a></li>
+                                <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">
+                                    <strong>view all notifications </strong></a></li>
+                            </ul>
+                        </li>
+                        <!-- Messages                        -->
+                        <li class="nav-item dropdown"><a id="messages" rel="nofollow" data-target="#" href="#"
+                                                         data-toggle="dropdown" aria-haspopup="true"
+                                                         aria-expanded="false" class="nav-link"><i
+                                class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
+                            <ul aria-labelledby="notifications" class="dropdown-menu">
+                                <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                    <div class="msg-profile"><img src="../img/avatar-1.jpg" alt="..."
+                                                                  class="img-fluid rounded-circle"></div>
+                                    <div class="msg-body">
+                                        <h3 class="h5">Jason Doe</h3><span>Sent You Message</span>
+                                    </div>
+                                </a></li>
+                                <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                    <div class="msg-profile"><img src="../img/avatar-2.jpg" alt="..."
+                                                                  class="img-fluid rounded-circle"></div>
+                                    <div class="msg-body">
+                                        <h3 class="h5">Frank Williams</h3><span>Sent You Message</span>
+                                    </div>
+                                </a></li>
+                                <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                    <div class="msg-profile"><img src="../img/avatar-3.jpg" alt="..."
+                                                                  class="img-fluid rounded-circle"></div>
+                                    <div class="msg-body">
+                                        <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
+                                    </div>
+                                </a></li>
+                                <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">
+                                    <strong>Read all messages </strong></a></li>
+                            </ul>
+                        </li>
+                        <!-- Languages dropdown    -->
+                        <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#"
+                                                         data-toggle="dropdown" aria-haspopup="true"
+                                                         aria-expanded="false"
+                                                         class="nav-link language dropdown-toggle"><img
+                                src="../img/flags/16/CN.png" alt="English"><span
+                                class="d-none d-sm-inline-block">简体中文</span></a>
+                            <ul aria-labelledby="languages" class="dropdown-menu">
+                                <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="../img/flags/16/CN.png"
+                                                                                           alt="English" class="mr-2">繁体中文</a>
+                                </li>
+                                <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="../img/flags/16/GB.png"
+                                                                                           alt="English" class="mr-2">English
+                                </a></li>
+                            </ul>
+                        </li>
+                        <!-- Logout    -->
+                        <li class="nav-item"><a href="login&registered.html" class="nav-link logout"> <span
+                                class="d-none d-sm-inline">退出</span><i class="fa fa-sign-out"></i></a></li>
+                    </ul>
                 </div>
-              </div>
             </div>
-          </section>
+        </nav>
+    </header>
+    <div class="page-content d-flex align-items-stretch">
+        <!-- Side Navbar -->
+        <nav class="side-navbar" :class="{'shrinked' : isActive}">
+            <!-- Sidebar Header-->
+            <div class="sidebar-header d-flex align-items-center" @click="loginUserDataUpdate">
+                <div class="avatar">
+                    <!---->
+                    <img v-if="this.userImg != ''" :src="this.userImg" alt="..." class="img-fluid rounded-circle">
+                    <img v-else src="../images/userimg.png" alt="..." class="img-fluid rounded-circle">
+                </div>
+                <div class="title">
+                    <h1 v-if="this.updateUser.name != ''" class="h4">{{this.updateUser.name}}</h1>
+                    <h1 v-else class="h4">李小澳</h1>
+                    <p v-if="this.updateUser.roles != ''">{{this.updateUser.roles}}</p>
+                    <p v-else>Mr.Wick</p>
+                </div>
+            </div>
+            <!-- Sidebar Navidation Menus--><span class="heading">主要</span>
+            <ul class="list-unstyled">
+                <li><a href="index.html"> <i class="fa fa-home" aria-hidden="true"></i>首页 </a></li>
+                <li><a href="user.html"> <i class="fa fa-user" aria-hidden="true"></i>用户 </a></li>
+                <li class="active"><a href="goods.html"> <i class="fa fa-eyedropper"></i>商品 </a></li>
+                <li><a href="evaluation.html"> <i class="fa fa-bookmark" aria-hidden="true"></i>评价 </a></li>
+                <li><a href="bulletin.html"> <i class="fa fa-bullhorn"></i>公告</a></li>
+            </ul>
+        </nav>
+        <div class="content-inner" :class="{'active' : isActive}">
+            <!-- Page Header-->
+            <header class="page-header">
+                <div class="container-fluid">
+                    <h2 class="no-margin-bottom">用户</h2>
+                </div>
+            </header>
+            <!-- Breadcrumb-->
+            <div class="breadcrumb-holder container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">首页</a></li>
+                    <li class="breadcrumb-item active">商品</li>
+                </ul>
+            </div>
+            <section class="tables" style="padding: 30px 0;">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-lg-6" style="max-width: 100%;flex: 0 0 100%">
+                            <div class="card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <!--<button type="button" id="closeCard1" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"
+                                        ><&lt;!&ndash;i class="fa fa-trash-o" aria-hidden="true " style="font-size:20px "></i>&ndash;&gt;
+                                        </button>-->
+                                        <!--<div aria-labelledby="closeCard1" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>-->
+                                    </div>
+                                </div>
+                                <div class="card-header d-flex align-items-center">
+                                    <h3 class="h4">用户表</h3>
+                                    <div class="form-group" style="margin-left: 20px;margin-bottom: 0">
+                                        <button class="btn btn-primary" @click="queryDate">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                    <div class="form-group" style=" margin-bottom: 0">
+                                        <input type="text" v-model="pagination.goodsName" class="form-control"
+                                               placeholder="商品名称 . . .">
+                                    </div>
+
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+
+                                                <th>ID</th>
+                                                <th>产品名称</th>
+                                                <th>产品介绍</th>
+                                                <th>产品状态</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="(v,k) in goods.list">
+                                                <td>{{v.id}}</td>
+                                                <td>{{v.productName}}</td>
+                                                <td>
+                                                    <p v-if="v.productCategory == null"><i class="fa fa-ban"
+                                                                                           style="font-size:20px ;"></i>
+                                                    </p>
+                                                    <p v-else>{{v.productCategory}}</i></p>
+                                                </td>
+                                                <td>
+                                                    <p v-if="v.productStatus == 1"><i class="fa fa-check"
+                                                                                      style="font-size:20px "></i></p>
+                                                    <p v-else="v.productStatus == 0"><i class="fa fa-close"
+                                                                                        style="font-size:20px "></i></p>
+                                                </td>
+                                                <td>
+                                                    <i class="fa fa-pencil-square" aria-hidden="true"
+                                                       style="font-size:20px " @click="popup(v)"></i>
+                                                    <!--<span style="font-size:20px ">|</span>
+                                                    <i class="fa fa-trash-o" aria-hidden="true"
+                                                       style="font-size:20px "></i>-->
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--分页组件-->
+                                    <div>
+                                        <div style="margin: auto;width: 200px">
+                                            <div style="float: left" @click="pageTurning(false)">
+                                                <span style="margin-right: 30px">
+                                                    <i class="fa fa-angle-double-left"
+                                                       style="font-size: 35px;color: #796AEE"></i>
+                                                </span>
+                                            </div>
+                                            <div style="float: left">
+                                                <span style="font-size: 25px; color: #796AEE">{{pagination.pageNum}}</span>
+                                                <span style="font-size: 20px;margin:0 20px 0 20px">|</span>
+                                                <span style="font-size: 25px; color: #796AEE">{{goods.pages}}</span>
+                                            </div>
+                                            <div style="float: left" @click="pageTurning(true)">
+                                                <span style="margin-left: 30px">
+                                                    <i class="fa fa-angle-double-right"
+                                                       style="font-size: 35px;color: #796AEE"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
         </div>
-      </div>
     </div>
-    <!-- JavaScript files-->
-    <script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-    <script src="../vendor/popper.js/umd/popper.min.js"> </script>
-    <script src="https://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
-    <script src="../vendor/jquery.cookie/jquery.cookie.js"> </script>
-    <script src="https://cdn.bootcss.com/Chart.js/2.7.0/Chart.min.js"></script>
-    <script src="../vendor/jquery-validation/jquery.validate.min.js"></script>
-    <script src="../js/charts-custom.js"></script>
-    <!-- Main File-->
-    <script src="../js/front.js"></script>
-  </body>
+    <!--弹出修改普通用户-->
+    <div id="itemUser" class="col-lg-6" style="width: 620px;">
+        <div class="card">
+            <div class="card-close">
+                <b class="item-close js-popup-close">
+                    <i class="fa fa-remove"></i>
+                </b>
+            </div>
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">修改商品信息</h3>
+            </div>
+            <div class="card-body">
+                <!--<p>Lorem ipsum dolor sit amet consectetur.</p>-->
+                <form>
+                    <div class="form-group">
+                        <label class="form-control-label">产品名称</label>
+                        <input type="text" :value="updategGoods.name" v-model="updategGoods.name" placeholder="name"
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">产品介绍</label>
+                        <textarea style="height: 100px" :value="updategGoods.introduction"
+                                  v-model="updategGoods.introduction" placeholder="商品介绍"
+                                  class="form-control" maxlength="200"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">产品图片</label>
+                        <input type="file" style="display: none" id="goodsImg" @change="goodsSpecifiName($event)">
+                        <br>
+                        <div style="float: left">
+                            <div v-for="imgSrc in goodsImg" v-if="goodsImg != '' "
+                                 style="height: 56px;width:56px; float:left; margin-right: 10px">
+                                <img style="height: 56px;width:56px;float:left; "
+                                     :src="imgSrc">
+                                <i class="fa fa-close"
+                                   style="position: relative;color: #f7f7f7;left: 42px;bottom: 58px;" @click="imgDele(imgSrc)"></i>
+                            </div>
+                        </div>
+                        <div v-if="goodsImg.length < 4"
+                             style="height: 56px;width: 56px; border: dashed 0.5px gainsboro;border-radius:5px;float: left"
+                             @click="goodsImgAdd">
+                            <p style="text-align:center;margin-top: 25%">
+                                <i class="fa fa-plus" aria-hidden="true" style="font-size: 30px;color: gainsboro"></i>
+                            </p>
+                        </div>
+                        <br>
+                    </div>
+                    <br>
+                    <div>
+                        <label class="form-control-label">产品状态</label>
+                        <div>
+                            <input id="Identity1" type="radio" v-model="updategGoods.status" checked="" value="1"
+                                   name="Identity">
+                            <label for="Identity1">生产</label>
+                            <input id="Identity2" type="radio" v-model="updategGoods.status" value="0" name="Identity"
+                                   style="margin-left: 30px">
+                            <label for="Identity2">停产</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" value="确认修改" class="btn btn-primary" @click="updateUserEvent(false)">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--修改当前登录用户and 头像上传-->
+    <div id="itemLogin" class="col-lg-6" style="width: 620px;">
+        <div class="card">
+            <div class="card-close">
+                <b class="item-close js-popup-close">
+                    <i class="fa fa-remove"></i>
+                </b>
+            </div>
+            <div class="card-header d-flex align-items-center">
+                <h3 class="h4">修改个人信息</h3>
+            </div>
+            <div class="card-body">
+                <!--<p>Lorem ipsum dolor sit amet consectetur.</p>-->
+                <form>
+                    <div class="avatar" style="width: 150px; height: 150px; border-radius: 50%">
+                        <input type="file" id="fileImg" @change="specifiName($event)" style="display: none">
+                        <img style="width: 150px; height: 150px" v-if="this.userImg != ''"
+                             @click="choosAvatar" :src="this.userImg" alt="..." class="img-fluid rounded-circle">
+                        <i v-else class="fa fa-plus-circle" @click="choosAvatar" style="font-size: 150px"
+                           aria-hidden="true"></i>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">姓名</label>
+                        <input type="text" :value="updateUser.name" v-model="updateUser.name" placeholder="姓名 . . ."
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">密码</label>
+                        <input type="text" :value="updateUser.name" v-model="updateUser.password" placeholder="密码 . . ."
+                               class="form-control">
+                    </div>
+                    <!--<div>
+                        <label class="form-control-label">性别</label>
+                        <div>
+                            <input id="log" type="radio" v-model="updateUser.roles" checked="" value="普通用户" name="Identity">
+                            <label for="Identity1">普通用户</label>
+                            <input id="Identity2" type="radio" v-model="updateUser.roles" value="管理员"  name="Identity"
+                                   style="margin-left: 30px">
+                            <label for="Identity2">管理员</label>
+                        </div>
+                    </div>-->
+                    <div>
+                        <label class="form-control-label">性别</label>
+                        <div>
+                            <input id="logSex1" type="radio" v-model="updateUser.sex" checked="" value="男"
+                                   name="optionsRadios">
+                            <label for="logSex1">男</label>
+                            <input id="logSex2" type="radio" v-model="updateUser.sex" value="女" name="optionsRadios"
+                                   style="margin-left: 30px">
+                            <label for="logSex2">女</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">邮箱</label>
+                        <input type="text" :value="updateUser.email" v-model="updateUser.email" placeholder="Email"
+                               class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" value="确认修改" @click="updateUserEvent(true)" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript files-->
+<script src="../js/public/jquery.min.js"></script>
+<!--<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>-->
+<script src="../vendor/popper.js/umd/popper.min.js"></script>
+<script src="../js/public/bootstrap.min.js"></script>
+<!--<script src="https://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>-->
+<script src="../vendor/jquery.cookie/jquery.cookie.js"></script>
+<script src="../js/public/Chart.min.js"></script>
+<!--<script src="https://cdn.bootcss.com/Chart.js/2.7.0/Chart.min.js"></script>-->
+<script src="../vendor/jquery-validation/jquery.validate.min.js"></script>
+<!--弹出层-->
+<script src="../js/public/jquery.popup.js"></script>
+<!-- Main File-->
+<script src="../js/front.js"></script>
+<!--Vue-->
+<script src="../js/public/vue.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+<script src="../js/goods.js"></script>
+<!--axios-->
+<!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+<script src="../js/public/axios.min.js"></script>
+<!-- 警告消息-->
+<script src="../js/public/spops.js"></script>
+<script src="../js/public/news/X-tips.js"></script>
+
+
+</body>
 </html>

@@ -19,7 +19,7 @@ public interface DBulletinService {
      * @param record
      * @return
      */
-    Rejson bulletinDynamicSelect(DBulletin record);
+    Rejson bulletinDynamicSelect(DBulletin record,Integer pn);
 
     /**
      * 公告动态修改

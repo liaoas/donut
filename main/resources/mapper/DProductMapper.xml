@@ -9,6 +9,9 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="product_introduction" property="productIntroduction" jdbcType="LONGVARCHAR"/>
     </resultMap>
+    <resultMap id="DImgResultMap" type="com.liao.entity.DProduct" extends="BaseResultMap">
+        <association property="dImgs" resultMap="com.liao.dao.DImgMapper.BaseResultMap"/>
+    </resultMap>
     <sql id="Base_Column_List">
         id, product_name, product_category, product_status, create_time,product_introduction
     </sql>
@@ -58,30 +61,37 @@
     </update>
 
     <!--动态查询-->
-    <select id="productDynamicSelect" parameterType="com.liao.entity.DProduct" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from d_product
+    <select id="productDynamicSelect" parameterType="com.liao.entity.DProduct" resultMap="DImgResultMap">
+        select d.id,
+               d.product_name,
+               d.product_category,
+               d.product_status,
+               d.create_time,
+               d.product_introduction,
+               i.id as did,
+               i.product_id,
+               i.img,
+               i.create_time
+        from d_product d
+        inner join d_img i on d.id = i.product_id
         where 1 = 1
         <if test="id != null">
-            and id = #{id},
+            and d.id = #{id}
         </if>
         <if test="productName != null">
-            and product_name like "%"#{productName}"%"
-        </if>
-        <if test="productCategory != null">
-            and product_category = #{productCategory}
+            and d.product_name like "%"#{productName}"%"
         </if>
         <if test="productStatus != null">
-            and product_status = #{productStatus}
+            and d.product_status = #{productStatus}
         </if>
         <if test="createTime != null">
-            and create_time like "%"#{createTime}"%"
+            and d.create_time like "%"#{createTime}"%"
         </if>
         <if test="productIntroduction != null">
-            and product_introduction like "%"#{productIntroduction}"%"
+            and d.product_introduction like "%"#{productIntroduction}"%"
         </if>
     </select>
+
     <insert id="insertSelective" parameterType="com.liao.entity.DProduct">
         insert into d_product
         <trim prefix="(" suffix=")" suffixOverrides=",">

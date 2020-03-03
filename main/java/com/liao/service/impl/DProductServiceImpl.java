@@ -1,5 +1,7 @@
 package com.liao.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.liao.dao.DProductMapper;
 import com.liao.entity.DProduct;
 import com.liao.exception.RegistException;
@@ -96,30 +98,17 @@ public class DProductServiceImpl implements DProductService {
     }
 
     /**
-     * 产品查询为空
+     * 产品查询
      * @param record
      * @return
      */
     @Override
-    public Rejson productDynamicSelect(DProduct record) {
+    public Rejson productDynamicSelect(DProduct record,Integer pn) {
         Rejson rejson = new Rejson();
         System.out.println("产品查询参数为："+record.toString());
-        try {
-            if(record == null){
-                throw  new RegistException("公告查询参数为空");
-            }
-            // 登录方法
-            List<DProduct> dProducts = dProductMapper.productDynamicSelect(record);
-            String userName;
-            // 验证结果
-            rejson = new ValidatorMsg().selectVerification(dProducts,"产品查询成功","产品为空");
-        }catch (RegistException e){
-            e.printStackTrace();
-            rejson.setList(null);
-            rejson.setStatus(500);
-            rejson.setBool(false);
-            rejson.setMessage(e.getMessage());
-        }
+        PageHelper.startPage(pn, 5);
+        PageInfo pageInfo = new PageInfo( dProductMapper.productDynamicSelect(record));
+        rejson.setData(pageInfo);
         return rejson;
     }
 

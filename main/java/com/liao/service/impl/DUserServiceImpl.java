@@ -1,5 +1,7 @@
 package com.liao.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.liao.dao.DUserMapper;
 import com.liao.entity.DUser;
 import com.liao.exception.RegistException;
@@ -109,6 +111,7 @@ public class DUserServiceImpl implements DUserService {
     @Override
     public Rejson userUpdate(DUser record) {
         Rejson rejson = new Rejson();
+        System.out.println("修改信息：" + record);
         try {
             if (record == null) {
                 throw new RegistException("用户信息修改数据为空");
@@ -130,14 +133,16 @@ public class DUserServiceImpl implements DUserService {
 
     /**
      * 用户分页查询
+     *
      * @param record
      * @return
      */
     @Override
-    public Rejson userDynamicSelect(DUser record) {
+    public Rejson userDynamicSelect(DUser record, Integer pn) {
         Rejson rejson = new Rejson();
-        List<DUser> dUsers = dUserMapper.userDynamicSelect(record);
-        rejson = new ValidatorMsg().selectVerification(dUsers, "查询成功", "数据为空");
+        PageHelper.startPage(pn, 5);
+        PageInfo pageInfo = new PageInfo(dUserMapper.userDynamicSelect(record));
+        rejson.setData(pageInfo);
         return rejson;
     }
 

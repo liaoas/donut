@@ -17,7 +17,7 @@ public interface DBbsService {
      * @param record
      * @return
      */
-    Rejson bbsDynamicSelect(DBbs record);
+    Rejson bbsDynamicSelect(DBbs record,Integer pn);
 
     /**
      * 留言修改

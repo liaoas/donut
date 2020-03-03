@@ -31,5 +31,5 @@ public interface DUserService {
      * @param record
      * @return
      */
-    Rejson userDynamicSelect(DUser record);
+    Rejson userDynamicSelect(DUser record,Integer pn);
 }

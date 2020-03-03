@@ -1,6 +1,8 @@
 package com.liao.entity;
 
 import java.util.Date;
+import java.util.List;
+import java.util.StringJoiner;
 
 public class DProduct {
     private Integer id;
@@ -14,6 +16,8 @@ public class DProduct {
     private Date createTime;
 
     private String productIntroduction;
+
+    private List<DImg> dImgs;
 
     public Integer getId() {
         return id;
@@ -63,19 +67,32 @@ public class DProduct {
         this.productIntroduction = productIntroduction == null ? null : productIntroduction.trim();
     }
 
+    public List<DImg> getdImgs() {
+        return dImgs;
+    }
+
+    public void setdImgs(List<DImg> dImgs) {
+        this.dImgs = dImgs;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", productName=").append(productName);
-        sb.append(", productCategory=").append(productCategory);
-        sb.append(", productStatus=").append(productStatus);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", productIntroduction=").append(productIntroduction);
-        sb.append("]");
-        return sb.toString();
+        StringBuilder bulider = new StringBuilder("DProduct [");
+        bulider.append("    id=")
+                .append(id);
+        bulider.append(",    productName=")
+                .append(productName);
+        bulider.append(",    productCategory=")
+                .append(productCategory);
+        bulider.append(",    productStatus=")
+                .append(productStatus);
+        bulider.append(",    createTime=")
+                .append(createTime);
+        bulider.append(",    productIntroduction=")
+                .append(productIntroduction);
+        bulider.append(",    dImgs=")
+                .append(dImgs);
+        bulider.append(']');
+        return bulider.toString();
     }
 }

@@ -69,26 +69,29 @@
     <update id="userUpdate" parameterType="com.liao.entity.DUser">
         update d_user
         set
-        <if test="userPassword != null">
+        <if test="userPassword != null and userPassword != ''">
             user_password = #{userPassword},
         </if>
-        <if test="userRoles != null">
+        <if test="userRoles != null and userRoles != ''">
             user_roles = #{userRoles},
         </if>
-        <if test="userName != null">
+        <if test="userName != null and userName != ''">
             user_name = #{userName},
         </if>
-        <if test="userSex != null">
+        <if test="userSex != null and userSex != ''">
             user_sex = #{userSex},
         </if>
-        <if test="userAge != null">
+        <if test="userAge != null and userAge != ''">
             user_age = #{userAge},
         </if>
-        <if test="userEmail != null">
+        <if test="userEmail != null and userEmail != ''">
             user_email = #{userEmail},
         </if>
         <if test="userStatus != null">
             user_status = #{userStatus},
+        </if>
+        <if test="headImg != null and headImg != ''">
+            head_img = #{headImg},
         </if>
         id = #{id}
         where id = #{id}

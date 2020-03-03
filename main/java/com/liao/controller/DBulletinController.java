@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
@@ -57,9 +58,10 @@ public class DBulletinController {
      */
     @RequestMapping(value = "/select", method = RequestMethod.POST)
     @ResponseBody
-    public Rejson bulletinDynamicSelect(DBulletin dBulletin) {
+    public Rejson bulletinDynamicSelect(DBulletin dBulletin,
+                                        @RequestParam(value = "pn",defaultValue = "1") Integer pn) {
         rejson = new Rejson();
-        rejson = dBulletinService.bulletinDynamicSelect(dBulletin);
+        rejson = dBulletinService.bulletinDynamicSelect(dBulletin,pn);
         return rejson;
     }
 

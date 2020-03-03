@@ -26,5 +26,5 @@ public interface DProductService {
      * @param record
      * @return
      */
-    Rejson productDynamicSelect(DProduct record);
+    Rejson productDynamicSelect(DProduct record,Integer pn);
 }

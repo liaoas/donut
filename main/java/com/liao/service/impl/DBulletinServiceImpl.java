@@ -1,5 +1,7 @@
 package com.liao.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.liao.dao.DBulletinMapper;
 import com.liao.entity.DBulletin;
 import com.liao.exception.RegistException;
@@ -70,25 +72,11 @@ public class DBulletinServiceImpl implements DBulletinService {
      * @return
      */
     @Override
-    public Rejson bulletinDynamicSelect(DBulletin record) {
+    public Rejson bulletinDynamicSelect(DBulletin record, Integer pn) {
         Rejson rejson = new Rejson();
-        System.out.println("留言查询参数为："+record.toString());
-        try {
-            if(record == null){
-                throw  new RegistException("公告查询参数为空");
-            }
-            // 登录方法
-            List<DBulletin> dBulletins = dBulletinMapper.bulletinDynamicSelect(record);
-            String userName;
-            // 验证结果
-            rejson = new ValidatorMsg().selectVerification(dBulletins,"公告查询成功","公告为空");
-        }catch (RegistException e){
-            e.printStackTrace();
-            rejson.setList(null);
-            rejson.setStatus(500);
-            rejson.setBool(false);
-            rejson.setMessage(e.getMessage());
-        }
+        PageHelper.startPage(pn, 5);
+        PageInfo pageInfo = new PageInfo(dBulletinMapper.bulletinDynamicSelect(record));
+        rejson.setData(pageInfo);
         return rejson;
     }
 

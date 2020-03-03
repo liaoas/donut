@@ -1,5 +1,7 @@
 package com.liao.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.liao.dao.DBbsMapper;
 import com.liao.entity.DBbs;
 import com.liao.entity.DUser;
@@ -69,25 +71,11 @@ public class DBbsServiceImpl implements DBbsService {
      * @return
      */
     @Override
-    public Rejson bbsDynamicSelect(DBbs record) {
+    public Rejson bbsDynamicSelect(DBbs record,Integer pn) {
         Rejson rejson = new Rejson();
-        System.out.println("留言查询参数为："+record.toString());
-        try {
-            if(record == null){
-                throw  new RegistException("留言查询参数为空");
-            }
-            // 登录方法
-            List<DBbs> dBbsList = dBbsMapper.bbsDynamicSelect(record);
-            String userName;
-            // 验证结果
-            rejson = new ValidatorMsg().selectVerification(dBbsList,"留言查询成功","留言为空");
-        }catch (RegistException e){
-            e.printStackTrace();
-            rejson.setList(null);
-            rejson.setStatus(500);
-            rejson.setBool(false);
-            rejson.setMessage(e.getMessage());
-        }
+        PageHelper.startPage(pn, 5);
+        PageInfo pageInfo = new PageInfo(dBbsMapper.bbsDynamicSelect(record));
+        rejson.setData(pageInfo);
         return rejson;
     }
 

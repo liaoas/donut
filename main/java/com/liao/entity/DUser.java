@@ -20,7 +20,7 @@ public class DUser {
 
     private Integer userAge;
 
-    @Pattern(regexp = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$",message = "邮箱不合法")
+    // @Pattern(regexp = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$",message = "邮箱不合法")
     private String userEmail;
 
     private String headImg;

@@ -84,20 +84,4 @@ public class ValidatorMsg {
         return rejson;
     }
 
-    /**
-     * 分页查询结果集校验
-     * @param rejson
-     * @param pn
-     * @return
-     */
-    public Rejson dataPagination(Rejson rejson,Integer pn){
-        // 判断是否为空，（防止出现空指针）进行分页
-        if (rejson.getList() != null) {
-            PageHelper.startPage(pn, 7);
-            PageInfo pageInfo = new PageInfo(rejson.getList(), 5);
-            rejson.setData(pageInfo);
-        }
-        return rejson;
-    }
-
 }

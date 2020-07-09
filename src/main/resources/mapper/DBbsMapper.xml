@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liao.dao.DBbsMapper">
+
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="1024"
+            readOnly="true">
+    </cache>
+
+    <resultMap id="BaseResultMap" type="com.liao.entity.DBbs">
+        <id column="bid" property="id" jdbcType="INTEGER"/>
+        <result column="bbs_userId" property="bbsUserid" jdbcType="INTEGER"/>
+        <result column="bbs_content" property="bbsContent" jdbcType="VARCHAR"/>
+        <result column="bbs_status" property="bbsStatus" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!--一对一嵌套-->
+    <resultMap id="BbsListMapSelect" type="com.liao.entity.DBbs" extends="BaseResultMap">
+        <collection property="dUser" fetchType="lazy"
+                    select="com.liao.dao.DUserMapper.DUserByProductId" column="BbsId = bbs_userId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, bbs_userId, bbs_content, bbs_status, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from d_bbs
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from d_bbs
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <!--根据用户ID添加留言-->
+    <insert id="userIDAddBbs" parameterType="com.liao.entity.DBbs">
+        insert into d_bbs (bbs_userId, bbs_content,
+                           bbs_status, create_time)
+        values (#{bbsUserid,jdbcType=INTEGER}, #{bbsContent,jdbcType=VARCHAR},
+                #{bbsStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <!--留言用户 一对一-->
+    <select id="bbsDynamicSelect" parameterType="com.liao.entity.DBbs" resultMap="BbsListMapSelect"  useCache="true">
+        select
+        b.id as bid,
+        b.bbs_userId,
+        b.bbs_content,
+        b.bbs_status,
+        b.create_time as BcreateTime
+        from d_bbs b
+        where 1 = 1
+        <if test="id != null">
+            and b.id = #{id}
+        </if>
+        <if test="bbsUserid != null">
+            and b.bbs_userId = #{bbsUserid}
+        </if>
+        <if test="bbsContent != null">
+            and b.bbs_content like concat(#{bbsContent},'%')
+        </if>
+        <if test="bbsStatus != null">
+            and b.bbs_status = #{bbsStatus}
+        </if>
+        <if test="createTime != null">
+            and b.create_time = #{createTime}
+        </if>
+        order by b.create_time desc
+    </select>
+    <!--留言动态修改-->
+    <update id="bbsDynamicUpdate" parameterType="com.liao.entity.DBbs">
+        update d_bbs
+        set
+        <if test="id != null">
+            id = #{id},
+        </if>
+        <if test="bbsUserid != null">
+            bbs_userId = #{bbsUserid},
+        </if>
+        <if test="bbsContent != null">
+            bbs_content = #{bbsContent},
+        </if>
+        <if test="bbsStatus != null">
+            bbs_status = #{bbsStatus},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime},
+        </if>
+        id = #{id}
+        where id = #{id}
+    </update>
+
+</mapper>

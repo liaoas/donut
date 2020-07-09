@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dependencies>
+
+    <relations>
+        <!-- 通过key的值 与 调用类的类名 进行匹配,从而确定当前是在清除或刷新那个namespace下的缓存 -->
+        <relation key="DUser">
+            <cacheNamespace>com.liao.dao.DUserMapper</cacheNamespace>
+        </relation>
+        <relation key="DBbs">
+            <cacheNamespace>com.liao.dao.DBbsMapper</cacheNamespace>
+        </relation>
+        <relation key="DImg">
+            <cacheNamespace>com.liao.dao.DImgMapper</cacheNamespace>
+        </relation>
+        <relation key="DProduct">
+            <cacheNamespace>com.liao.dao.DProductMapper</cacheNamespace>
+        </relation>
+        <relation key="DBulletin">
+            <cacheNamespace>com.liao.dao.DBulletinMapper</cacheNamespace>
+        </relation>
+    </relations>
+
+    <statements>
+        <!--
+            id 为缓存的namespace
+            uni-directional 表示单向关联,即statement的缓存刷新会清除observer的缓存,而observer的缓存的刷新不会清除statement的缓存
+            一个statement标签下可有多个observer标签
+         -->
+        <statement id="*.*.*.*.dao.ProjectMapper" type="uni-directional">
+            <observer id="*.*.*.*.dao.WarnMapper" />
+        </statement>
+        <statement id="*.*.*.*.dao.DeviceMapper" type="uni-directional">
+            <observer id="*.*.*.*.dao.WarnMapper" />
+        </statement>
+
+        <!--
+            id 为缓存的namespace
+            bi-directional 表示双向关联,statement和observer的缓存刷新都会对双方造成影响
+            一个statement标签下可有多个observer标签
+         -->
+        <!-- <statement id="*.*.*.*.dao.DeviceMapper" type="bi-directional">
+            <observer id="*.*.*.*.dao.WarnMapper" />
+        </statement> -->
+
+        <!-- notice: 如果 双向关联 和 单向关联 的内容一样，则以双向的规则为准 -->
+    </statements>
+
+</dependencies>

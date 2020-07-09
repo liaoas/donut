@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liao.dao.DProductMapper">
+    <!--配置二级缓存-->
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="1024"
+            readOnly="true">
+    </cache>
+    <resultMap id="BaseResultMap" type="com.liao.entity.DProduct">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="product_name" property="productName" jdbcType="VARCHAR"/>
+        <result column="product_category" property="productCategory" jdbcType="INTEGER"/>
+        <result column="product_status" property="productStatus" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="product_introduction" property="productIntroduction" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <resultMap id="DImgResultMap" type="com.liao.entity.DProduct" extends="BaseResultMap">
+        <association property="dImgs" resultMap="com.liao.dao.DImgMapper.BaseResultMap"/>
+    </resultMap>
+
+    <!--产品图片一对多查询-->
+    <resultMap id="dProductListMapSelect" type="com.liao.entity.DProduct" extends="BaseResultMap">
+        <collection property="dImgs" fetchType="lazy"
+                    select="com.liao.dao.DImgMapper.selectDImgByProductId" column="{productId = id}"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_name, product_category, product_status, create_time,product_introduction
+    </sql>
+
+    <!--一对多嵌套查询-->
+    <select id="productDynamicSelect" parameterType="com.liao.entity.DProduct" resultMap="dProductListMapSelect" useCache="true">
+        select
+        d.id,
+        d.product_name,
+        d.product_category,
+        d.product_status,
+        d.create_time,
+        d.product_introduction
+        from d_product d
+        where 1 = 1
+        <if test="id != null and id != ''">
+            and d.id = #{id}
+        </if>
+        <if test="productName != null and productName != ''">
+            and d.product_name like concat(#{productName},'%')
+        </if>
+        <if test="productStatus != null and productStatus != ''">
+            and d.product_status = #{productStatus}
+        </if>
+        <if test="createTime != null and createTime != ''">
+            and d.create_time like concat(#{createTime},'%')
+        </if>
+        <if test="productIntroduction != null and productIntroduction != ''">
+            and d.product_introduction like concat(#{productIntroduction},'%')
+        </if>
+        order by d.create_time desc
+    </select>
+
+    <!--产品删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from d_product
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!--产品添加 返回主键-->
+    <insert id="productInsertAdd" parameterType="com.liao.entity.DProduct" useGeneratedKeys="true" keyProperty="id">
+        insert into d_product (product_name, product_category,
+                               product_status, create_time, product_introduction)
+        values (#{productName,jdbcType=VARCHAR}, #{productCategory,jdbcType=INTEGER},
+                #{productStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+                #{productIntroduction,jdbcType=LONGVARCHAR})
+    </insert>
+
+    <!--动态修改-->
+    <update id="productDynamicUpdate" parameterType="com.liao.entity.DProduct">
+        update d_product
+        set
+        <if test="id != null">
+            id = #{id},
+        </if>
+        <if test="productName != null">
+            product_name = #{productName},
+        </if>
+        <if test="productCategory != null">
+            product_category = #{productCategory},
+        </if>
+        <if test="productStatus != null">
+            product_status = #{productStatus},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime},
+        </if>
+        <if test="productIntroduction != null">
+            product_introduction = #{productIntroduction},
+        </if>
+        id = #{id}
+        where id = #{id}
+    </update>
+</mapper>

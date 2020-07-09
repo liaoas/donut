@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liao.dao.DBulletinMapper">
+    <resultMap id="BaseResultMap" type="com.liao.entity.DBulletin">
+        <id column="bid" property="id" jdbcType="INTEGER"/>
+        <result column="bulletin_userId" property="bulletinUserid" jdbcType="INTEGER"/>
+        <result column="bulletin_title" property="bulletinTitle" jdbcType="VARCHAR"/>
+        <result column="bulletin_status" property="bulletinStatus" jdbcType="INTEGER"/>
+        <result column="bcreatettime" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="bulletin_content" property="bulletinContent" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <resultMap id="UserResultMap" type="com.liao.entity.DBulletin" extends="BaseResultMap">
+        <association property="dUser" resultMap="com.liao.dao.DUserMapper.BaseResultMap"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, bulletin_userId, bulletin_title, bulletin_status, create_time,bulletin_content
+    </sql>
+    <!--公告添加-->
+    <insert id="userBulletinAdd" parameterType="com.liao.entity.DBulletin">
+        insert into d_bulletin (bulletin_userId, bulletin_title,
+                                bulletin_status, create_time, bulletin_content)
+        values (#{bulletinUserid,jdbcType=INTEGER}, #{bulletinTitle,jdbcType=VARCHAR},
+                #{bulletinStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+                #{bulletinContent,jdbcType=LONGVARCHAR})
+    </insert>
+
+    <!--公告动态查询-->
+    <select id="bulletinDynamicSelect" parameterType="com.liao.entity.DBulletin" resultMap="UserResultMap">
+        select
+        b.id as bid,
+        b.bulletin_userId,
+        b.bulletin_title,
+        b.bulletin_status,
+        b.create_time as bcreatettime,
+        b.bulletin_content,
+        u.id,
+        u.user_account,
+        u.user_password,
+        u.user_roles,
+        u.user_name,
+        u.user_sex,
+        u.user_age,
+        u.user_email,
+        u.head_img,
+        u.user_status,
+        u.create_time as ucreateTime
+        from d_bulletin b
+        inner join d_user u on b.bulletin_userId = u.id
+        where 1 = 1
+        <if test="record.id != null">
+            and b.id = #{record.id}
+        </if>
+        <if test="record.bulletinUserid != null">
+            and b.bulletin_userId = #{record.bulletinUserid}
+        </if>
+        <if test="record.bulletinTitle != null">
+            and b.bulletin_title like concat(#{record.bulletinTitle},'%')
+        </if>
+        <if test="record.bulletinStatus != null">
+            and b.bulletin_status = #{record.bulletinStatus}
+        </if>
+        <if test="record.createTime != null">
+            and b.create_time = #{record.createTime}
+        </if>
+        <if test="record.bulletinContent != null">
+            and b.bulletin_content like concat(#{bulletinContent},'%')
+        </if>
+        <if test="slectTime != null and slectTime != ''">
+            <if test="slectTime == '1'.toString()">
+                and b.create_time &gt; DATE_SUB(NOW(), INTERVAL 60 MINUTE)
+            </if>
+            <if test="slectTime == '2'.toString()">
+                and b.create_time &gt;= (NOW() - interval 24 hour)
+            </if>
+            <if test="slectTime == '3'.toString()">
+                and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= b.create_time
+            </if>
+
+            <if test="slectTime == '4'.toString()">
+                and DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= date(b.create_time)
+            </if>
+
+            <if test="slectTime == '5'.toString()">
+                and YEAR(b.create_time)=YEAR(NOW())
+            </if>
+        </if>
+        order by b.create_time desc
+    </select>
+
+    <!--公告动态修改-->
+    <update id="bulletinDynamicUpdate" parameterType="com.liao.entity.DBulletin">
+        update d_bulletin
+        set
+        <if test="bulletinUserid != null">
+            bulletin_userId = #{bulletinUserid},
+        </if>
+        <if test="bulletinTitle != null">
+            bulletin_title = #{bulletinTitle},
+        </if>
+        <if test="bulletinStatus != null">
+            bulletin_status = #{bulletinStatus},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime},
+        </if>
+        <if test="bulletinContent != null">
+            bulletin_content = #{bulletinContent},
+        </if>
+        id = #{id}
+        where id = #{id}
+    </update>
+</mapper>

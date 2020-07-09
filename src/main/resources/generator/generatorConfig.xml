@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!--根节点标签-->
+<generatorConfiguration>
+    <!--指定一个需要在配置中使用的外部解析文件-->
+    <!--<properties></properties>-->
+    <!--属性： url：指定系统上的指定文件-->
+    <!--resource：指定classpath下的文件-->
+    <!-- 数据库驱动包本地路径-->
+    <classPathEntry
+            location="C:\\Users\\liao9\\.m2\\repository\\mysql\\mysql-connector-java\\8.0.18\\mysql-connector-java-8.0.18.jar"/>
+    <!--MyBatis3Simple：避免生成Example 如果需要设置为MyBatis3-->
+    <!--defaultModelType="flat"：每个表只生成一个实体类-->
+    <context id="MySqlContext" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!--设置分隔符-->
+        <!--防止出现数据表名称中间有空格的错误`user name`-->
+        <!--javaFileEncoding 设置java文件编码-->
+        <!--<property name="autoDelimitKeywords" value="`"/>-->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!--实体类生成toString方法-->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin">
+            <!--当targetRuntime="MyBatis3"时才会生效-->
+            <property name="cache_eviction" value="LRU"/>
+            <property name="cache_size" value="1024"/>
+        </plugin>
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/icupcake?serverTimezone=UTC"
+                        userId="root"
+                        password="liao">
+            <!--获取列的注释信息-->
+            <property name="remarksReporting" value="true"/>
+        </jdbcConnection>
+
+        <!--指定JDBC类型和Java类型如何转换-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类的包名和位置-->
+        <javaModelGenerator targetPackage="com.liao.entity" targetProject="src/main/java">
+            <!-- 默认false 是否允许子包 -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 默认false 是否对model添加 构造函数 -->
+            <!--<property name="constructorBased" value="true"/>-->
+            <!-- 默认false 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+            <!-- 默认false 是否对类CHAR类型的列的数据进行trim操作 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成Mapper接口的包名和位置-->
+        <!--ANNOTATEDMAPPER：生成基于注解的Mapper接口，不会有对应的XML映射文件（不推荐使用，不利于维护）-->
+        <!--XMLMAPPER：所有的方法都在XML中，接口调用依赖XML文件（推荐使用）-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.liao.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!--<table tableName="%"/>（生成所有表）-->
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+        <table schema="SCOTT"
+               tableName="d_bbs"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="SCOTT"
+               tableName="d_bulletin"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="SCOTT"
+               tableName="d_img"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table schema="SCOTT"
+               tableName="d_product"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <!--针对字段类型为text等会默认产生XXXXWithBlobs的方法问题-->
+            <!--<columnOverride column="user_info" javaType="java.lang.String" jdbcType="VARCHAR"/>-->
+        </table>
+        <table schema="SCOTT"
+               tableName="d_roles"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+        <table schema="SCOTT"
+               tableName="d_user"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+    </context>
+</generatorConfiguration>

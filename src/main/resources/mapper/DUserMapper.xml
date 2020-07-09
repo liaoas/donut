@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liao.dao.DUserMapper">
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="1024"
+            readOnly="true">
+    </cache>
+
+    <resultMap id="BaseResultMap" type="com.liao.entity.DUser">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_account" jdbcType="VARCHAR" property="userAccount"/>
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="user_roles" jdbcType="VARCHAR" property="userRoles"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_sex" jdbcType="CHAR" property="userSex"/>
+        <result column="user_age" jdbcType="INTEGER" property="userAge"/>
+        <result column="user_email" jdbcType="VARCHAR" property="userEmail"/>
+        <result column="head_img" jdbcType="VARCHAR" property="headImg"/>
+        <result column="user_status" jdbcType="INTEGER" property="userStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_account, user_password, user_roles, user_name, user_sex, user_age, user_email,
+    head_img, user_status, create_time
+    </sql>
+
+    <!--用户动态查询-->
+    <!--判断用户名是否重复-->
+    <!--登录-->
+    <select id="userDynamicSelect" parameterType="com.liao.entity.DUser" resultMap="BaseResultMap" useCache="true">
+        select
+        <include refid="Base_Column_List"/>
+        from d_user
+        where 1 = 1
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="userAccount != null and userAccount != ''">
+            and user_account = #{userAccount}
+        </if>
+        <if test="userPassword != null and userPassword != ''">
+            and user_password = #{userPassword}
+        </if>
+        <if test="userRoles != null and userRoles != ''">
+            and user_roles like concat(#{userRoles},'%')
+        </if>
+        <if test="userName != null and userName != ''">
+            and user_name like concat(#{userName},'%')
+        </if>
+        <if test="userSex != null and userSex != ''">
+            and user_sex like concat(#{userSex},'%')
+        </if>
+        <if test="userAge != null and userAge != ''">
+            and user_age like concat(#{userAge},'%')
+        </if>
+        <if test="userEmail != null and userEmail != ''">
+            and user_email like concat(#{userEmail},'%')
+        </if>
+        <if test="userStatus != null and userStatus != ''">
+            and user_status = #{userStatus}
+        </if>
+        order by create_time desc
+    </select>
+
+    <!--用户注册-->
+    <insert id="userRegistered" parameterType="com.liao.entity.DUser">
+        insert into d_user (user_account, user_password,
+                            user_roles, user_status, create_time)
+        values (#{userAccount,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
+                #{userRoles,jdbcType=VARCHAR}, #{userStatus,jdbcType=INTEGER},
+                #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <!--用户动态修改-->
+    <update id="userUpdate" parameterType="com.liao.entity.DUser">
+        update d_user
+        set
+        <if test="userPassword != null and userPassword != ''">
+            user_password = #{userPassword},
+        </if>
+        <if test="userRoles != null and userRoles != ''">
+            user_roles = #{userRoles},
+        </if>
+        <if test="userName != null and userName != ''">
+            user_name = #{userName},
+        </if>
+        <if test="userSex != null and userSex != ''">
+            user_sex = #{userSex},
+        </if>
+        <if test="userAge != null and userAge != ''">
+            user_age = #{userAge},
+        </if>
+        <if test="userEmail != null and userEmail != ''">
+            user_email = #{userEmail},
+        </if>
+        <if test="userStatus != null">
+            user_status = #{userStatus},
+        </if>
+        <if test="headImg != null and headImg != ''">
+            head_img = #{headImg},
+        </if>
+        id = #{id}
+        where id = #{id}
+    </update>
+
+    <!--一对一嵌套-->
+    <select id="DUserByProductId" resultMap="BaseResultMap"  useCache="true">
+        select u.id,
+               u.user_account,
+               u.user_password,
+               u.user_roles,
+               u.user_name,
+               u.user_sex,
+               u.user_age,
+               u.user_email,
+               u.head_img,
+               u.user_status,
+               u.create_time as ucreateTime
+        from d_user u
+        where u.id = #{BbsId}
+    </select>
+
+</mapper>

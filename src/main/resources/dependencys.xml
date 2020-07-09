@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dependencies>
+    <statements>
+        <!--商品与图片-->
+        <statement id="com.liao.dao.DImgMapper.addProductImgList">
+            <observer id="com.liao.dao.DProductMapper.productDynamicSelect"/>
+        </statement>
+
+        <!--&lt;!&ndash;用户与评价&ndash;&gt;
+        <statement id="com.liao.dao.DUserMapper.userUpdate">
+            <observer id="com.liao.dao.DBbsMapper.bbsDynamicSelect"/>
+        </statement>
+    </statements>-->
+</dependencies>

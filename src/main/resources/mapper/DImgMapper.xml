@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liao.dao.DImgMapper">
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="1024"
+            readOnly="true">
+    </cache>
+
+    <resultMap id="BaseResultMap" type="com.liao.entity.DImg">
+        <id column="did" property="id" jdbcType="INTEGER"/>
+        <result column="product_id" property="productId" jdbcType="INTEGER"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, product_id, img, create_time
+    </sql>
+
+    <!--产品图片添加事件-->
+    <insert id="addProductImgList" parameterType="com.liao.entity.DImg">
+        insert into d_img(product_id, img,create_time) values
+        <foreach collection="imgList" item="imgs" separator=",">
+            (#{imgs.productId},#{imgs.img},#{imgs.createTime})
+        </foreach>
+    </insert>
+
+    <!--产品图片删除-->
+    <delete id="delProductImg" parameterType="com.liao.entity.DImg">
+        delete
+        from d_img
+        where product_id = #{productId}
+    </delete>
+
+    <!--一对多嵌套查询-->
+    <select id="selectDImgByProductId" resultMap="BaseResultMap">
+        select i.id as did,
+               i.product_id,
+               i.img,
+               i.create_time
+        from d_img i
+        where i.product_id = #{productId}
+    </select>
+
+</mapper>
